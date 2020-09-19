@@ -112,7 +112,7 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "Analysis of bike rental data from TfL bike sharing"
       subtitle = "How COVID impacted Tfl"
-      image = "londonerbiking.jpg"
+      image = "tfl.jpg"
       url = "projects/project4"
 
     [[params.tiles.showcase]]
