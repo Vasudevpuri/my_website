@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="By way of introduction, I am Vasu Dev Puri and am living in United Arab Emirates, Dubai. I am currently working with the Valuations and Modelling team at PwC Deals through which I’ve worked on several fair value, business restructuring / turnaround , asset optimization, business strategy, purchase price allocations, synthetic credit ratings and business model review engagements. In addition, I have also built benchmarking and interactive dashboards running on live data from Bloomberg / Capital IQ, using Data Analytic tools such as Power BI and Power Pivot.">
+	<meta name="author" content="Vasu Dev Puri">
+	<meta name="generator" content="Hugo 0.74.3" />
+	<title>How was public transport impacted during the Covid-19 pandemic? &middot; Portfolio website for Vasu Puri</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/" class="logo"><strong>Vasu Dev Puri</strong> <span></span></a>
+        <nav>
+            <a href="#menu"></a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="/">Home</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>How was public transport impacted during the Covid-19 pandemic?</h1>
+                            </header>
+                            
+                            
+
+
+<div id="excess-rentals-in-tfl-bike-sharing" class="section level1">
+<h1>Excess rentals in TfL bike sharing</h1>
+<p>Below we analyse the TfL data on how many bikes are hired every single day in London.</p>
+<p>In the following graphs we create a facet grid that plots bikes hired by month and year.</p>
+<p><img src="C:/Users/Vasudev%20Puri/Desktop/my_website_3/images/tfl_distributions_monthly.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Looking at May and June in 2020 (after lockdown) we can see that, compared to the previous years, there is a significant increase in the rentals owing to a pent up demand for alternative public transportation to the tube and the bus because of the Covid-19 pandemic. In the prior year, the trend is different, as more people tend to use for-hire bicycles for the first 5 months of 2019.</p>
+<p>It can hence be concluded that the lock down inhibited people from moving, and directly impacted the utilisation of public transport in 2020. Another interesting fact would be the carbon tax system implemented in inner london, discouraging people to use personal automibiles within the city. This data point leads us to conclude that bicycles are a common mode of transport in the city, and covid restrictions profoundly impacted their utilisation.</p>
+<pre class="r"><code>#calcuating the overall monthly average 
+#filter for specfic year 
+sum_bike_month &lt;- bike %&gt;%  
+  filter(year %in% c(2015,2016,2017,2018,2019,2020)) %&gt;%
+  #calculate month avearge 
+  group_by(month) %&gt;%
+  summarise(month_mean  = mean(bikes_hired))
+
+
+#calcualting monthly avefage for every month  
+sum_bike &lt;- bike %&gt;%
+   filter(year %in% c(2015,2016,2017,2018,2019,2020)) %&gt;%
+  group_by(month, year) %&gt;%
+  summarize(bike_avg = mean(bikes_hired)) %&gt;%
+  select(month,year, bike_avg)
+
+#joining the two datasets
+sum_bike &lt;- left_join(sum_bike, sum_bike_month, by = &#39;month&#39;, copy = TRUE) 
+
+geom_line(aes(x = as.Date(paste0(&quot;2015-&quot;, month,&quot;-01&quot;),&quot;%Y-%m-%d&quot;), y = bike_avg))</code></pre>
+<pre><code>## mapping: x = ~as.Date(paste0(&quot;2015-&quot;, month, &quot;-01&quot;), &quot;%Y-%m-%d&quot;), y = ~bike_avg 
+## geom_line: na.rm = FALSE, orientation = NA
+## stat_identity: na.rm = FALSE
+## position_identity</code></pre>
+<pre class="r"><code>#creating a plot
+sum_bike %&gt;%
+  ggplot() +
+  labs(title =&#39;Monthly changes in TfL bike rentals&#39; ,
+       subtitle = &#39;Change from monthly average shown in blue \n and calculated between 2015-2019&#39;,
+       x = &#39;&#39;,
+       y =&#39; Bike rentals&#39;, 
+       caption=&quot;Source: TfL, London Data Store &quot;)+
+  facet_wrap(.~year)+
+  theme_minimal()+
+  #adding month labels 
+  scale_x_date(date_labels = &quot;%b&quot;)+
+  geom_line(aes(x = as.Date(paste0(&quot;2015-&quot;, month,&quot;-01&quot;),&quot;%Y-%m-%d&quot;), y = month_mean), color =&#39;blue&#39; , size = 1)+
+  #adding the two red and green ribbons 
+  geom_ribbon(aes(x = as.Date(paste0(&quot;2015-&quot;, month,&quot;-01&quot;),&quot;%Y-%m-%d&quot;) , y = bike_avg,
+                  ymin = pmin(month_mean , bike_avg) , 
+                  ymax = pmax(month_mean , month_mean)), 
+              fill = &#39;red&#39;, alpha = 0.3 )+ 
+    geom_ribbon(aes(x = as.Date(paste0(&quot;2015-&quot;, month,&quot;-01&quot;),&quot;%Y-%m-%d&quot;) , y = bike_avg,
+                  ymin = pmin(month_mean , month_mean) , 
+                  ymax = pmax(bike_avg, month_mean)), 
+              fill = &#39;green&#39;, alpha = 0.3 ) +
+  geom_line(aes(x = as.Date(paste0(&quot;2015-&quot;, month,&quot;-01&quot;),&quot;%Y-%m-%d&quot;), y = bike_avg)) +
+theme(aspect.ratio = 0.7)</code></pre>
+<p><img src="/projects/project4/index_files/figure-html/unnamed-chunk-1-1.png" width="648" style="display: block; margin: auto;" />
+The second graph looks at percentage changes from the expected level of weekly rentals. The two grey shaded rectangles correspond to the second (weeks 14-26) and fourth (weeks 40-52) quarters. To calculate the expected rentals we used the mean rather than the median because of the absence of noticeable outliers. This graph paints a similar pricture, illustrating how Covid-19 had a direct impact on bicycle utilisation in London.</p>
+<pre class="r"><code>#calcuating the overall monthly average 
+#filter for specfic year 
+sum_bike_week &lt;- bike %&gt;%  
+  filter(year %in% c(2015,2016,2017,2018,2019,2020)) %&gt;%
+  #calculate month avearge 
+  group_by(week) %&gt;%
+  summarise(week_mean  = mean(bikes_hired))
+
+
+#calcualting monthly avefage for every month  
+sum_bike_week1 &lt;- bike %&gt;%
+   filter(year %in% c(2015,2016,2017,2018,2019,2020)) %&gt;%
+   mutate(quarter = quarter(day)) %&gt;%
+  group_by(week,year,quarter) %&gt;%
+  summarize(bike_avg = mean(bikes_hired)) %&gt;%
+  select(week,year,quarter, bike_avg)
+
+#joining the two datasets
+sum_bike_week &lt;- left_join(sum_bike_week, sum_bike_week1, by = &#39;week&#39;, copy = TRUE) 
+
+#find the percent difference 
+sum_bike_week &lt;- sum_bike_week %&gt;%
+  mutate(diff = (bike_avg - week_mean)/ week_mean) %&gt;%
+  mutate(color = ifelse(diff&gt; 0 , &#39;A&#39; , &#39;B&#39;))
+
+#plotting chart
+sum_bike_week %&gt;%
+  ggplot()+
+  labs(x = &#39;Week&#39; , y = &#39;&#39;, title = &#39;Weekly changes in TfL bike rentals&#39;,
+       subtitle = &#39;% change from weekly averages \n calculated between 2015-2019&#39;,
+        caption=&quot;Source: TfL, London Data Store &quot;)+
+  #adding two geom_ribbon red and green so if it&#39;s above or below it changes color 
+ geom_ribbon(aes(x = week , y = diff, ymin =pmin(0,diff), ymax = diff), 
+              fill=&quot;green&quot;, alpha = 0.5)+
+  geom_ribbon(aes(x = week , y = diff,ymin = diff, ymax = pmax(0,diff)), 
+              fill = &quot;firebrick1&quot;, alpha = 0.5)+
+  facet_wrap(~year)+
+  geom_line(aes(x = week , y = diff,))+
+  theme_minimal()+
+  geom_rug(sides = &#39;b&#39;, mapping = aes(x = week , y = diff, color = color))+
+  scale_color_manual(values = c(&quot;green&quot; , &quot;firebrick1&quot;))+
+  scale_y_continuous(labels = scales::percent)+
+  theme(legend.position =  &#39;none&#39;)+
+  #adding two transparent rectangle
+geom_rect(data = data.frame(x = 0, y = 0),xmin = 13, xmax  = 26 ,ymin = -0.6, ymax = 0.65 , alpha =  0.2,) + 
+  geom_rect(data = data.frame(x = 0, y = 0),xmin = 39, xmax  = 52 ,ymin = -0.6, ymax = 0.6 , alpha =  0.2) +
+theme(aspect.ratio = 1.4)</code></pre>
+<p><img src="/projects/project4/index_files/figure-html/unnamed-chunk-2-1.png" width="648" style="display: block; margin: auto;" /></p>
+</div>
+
+                        </div>
+                    </section>
+            <!-- Disqus Inject -->
+                
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="https://github.com/Vasudevpuri" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com/in/vasudevpuri" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Company Name</li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+
+    
+
+    
+
+    </body>
+</html>

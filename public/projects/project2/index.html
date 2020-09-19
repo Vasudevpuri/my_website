@@ -1,0 +1,280 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="By way of introduction, I am Vasu Dev Puri and am living in United Arab Emirates, Dubai. I am currently working with the Valuations and Modelling team at PwC Deals through which I’ve worked on several fair value, business restructuring / turnaround , asset optimization, business strategy, purchase price allocations, synthetic credit ratings and business model review engagements. In addition, I have also built benchmarking and interactive dashboards running on live data from Bloomberg / Capital IQ, using Data Analytic tools such as Power BI and Power Pivot.">
+	<meta name="author" content="Vasu Dev Puri">
+	<meta name="generator" content="Hugo 0.74.3" />
+	<title>Can Trump trump the 2020 US Presdential Elections? &middot; Portfolio website for Vasu Puri</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/" class="logo"><strong>Vasu Dev Puri</strong> <span></span></a>
+        <nav>
+            <a href="#menu"></a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="/">Home</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>Can Trump trump the 2020 US Presdential Elections?</h1>
+                            </header>
+                            
+                            
+
+
+<div id="trumps-approval-margins" class="section level1">
+<h1>Trump’s Approval Margins</h1>
+<p>In the following section of the report we will analyze data on <a href="https://projects.fivethirtyeight.com/trump-approval-ratings">fivethirtyeight.com</a> on all polls that track the president’s approval</p>
+<pre class="r"><code>#Import approval polls data
+approval_polllist &lt;- read_csv(&quot;https://projects.fivethirtyeight.com/trump-approval-data/approval_polllist.csv&quot;)
+
+glimpse(approval_polllist)</code></pre>
+<pre><code>## Rows: 15,538
+## Columns: 22
+## $ president           &lt;chr&gt; &quot;Donald Trump&quot;, &quot;Donald Trump&quot;, &quot;Donald Trump&quot;,...
+## $ subgroup            &lt;chr&gt; &quot;All polls&quot;, &quot;All polls&quot;, &quot;All polls&quot;, &quot;All pol...
+## $ modeldate           &lt;chr&gt; &quot;9/18/2020&quot;, &quot;9/18/2020&quot;, &quot;9/18/2020&quot;, &quot;9/18/20...
+## $ startdate           &lt;chr&gt; &quot;1/20/2017&quot;, &quot;1/20/2017&quot;, &quot;1/20/2017&quot;, &quot;1/21/20...
+## $ enddate             &lt;chr&gt; &quot;1/22/2017&quot;, &quot;1/22/2017&quot;, &quot;1/24/2017&quot;, &quot;1/23/20...
+## $ pollster            &lt;chr&gt; &quot;Gallup&quot;, &quot;Morning Consult&quot;, &quot;Ipsos&quot;, &quot;Gallup&quot;,...
+## $ grade               &lt;chr&gt; &quot;B&quot;, &quot;B/C&quot;, &quot;B-&quot;, &quot;B&quot;, &quot;C+&quot;, &quot;B-&quot;, &quot;B&quot;, &quot;B+&quot;, &quot;...
+## $ samplesize          &lt;dbl&gt; 1500, 1992, 1632, 1500, 1500, 1651, 1500, 1190,...
+## $ population          &lt;chr&gt; &quot;a&quot;, &quot;rv&quot;, &quot;a&quot;, &quot;a&quot;, &quot;lv&quot;, &quot;a&quot;, &quot;a&quot;, &quot;rv&quot;, &quot;lv&quot;...
+## $ weight              &lt;dbl&gt; 0.262, 0.680, 0.153, 0.243, 0.200, 0.142, 0.227...
+## $ influence           &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ approve             &lt;dbl&gt; 45.0, 46.0, 42.1, 45.0, 57.0, 42.3, 46.0, 36.0,...
+## $ disapprove          &lt;dbl&gt; 45.0, 37.0, 45.2, 46.0, 43.0, 45.8, 45.0, 44.0,...
+## $ adjusted_approve    &lt;dbl&gt; 45.8, 45.3, 43.2, 45.8, 51.6, 43.4, 46.8, 37.6,...
+## $ adjusted_disapprove &lt;dbl&gt; 43.6, 38.2, 43.8, 44.6, 44.5, 44.4, 43.6, 42.7,...
+## $ multiversions       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,...
+## $ tracking            &lt;lgl&gt; TRUE, NA, TRUE, TRUE, TRUE, TRUE, TRUE, NA, TRU...
+## $ url                 &lt;chr&gt; &quot;http://www.gallup.com/poll/201617/gallup-daily...
+## $ poll_id             &lt;dbl&gt; 49253, 49249, 49426, 49262, 49266, 49425, 49236...
+## $ question_id         &lt;dbl&gt; 77265, 77261, 77599, 77274, 77278, 77598, 77248...
+## $ createddate         &lt;chr&gt; &quot;1/23/2017&quot;, &quot;1/23/2017&quot;, &quot;3/1/2017&quot;, &quot;1/24/201...
+## $ timestamp           &lt;chr&gt; &quot;17:01:19 18 Sep 2020&quot;, &quot;17:01:19 18 Sep 2020&quot;,...</code></pre>
+<pre class="r"><code># Use `lubridate` to fix dates, as they are given as characters.
+
+approval_polllist$modeldate &lt;- mdy(approval_polllist$modeldate)
+approval_polllist$startdate &lt;- mdy(approval_polllist$startdate)
+approval_polllist$enddate &lt;- mdy(approval_polllist$enddate)
+
+approval_polllist</code></pre>
+<pre><code>## # A tibble: 15,538 x 22
+##    president subgroup modeldate  startdate  enddate    pollster grade samplesize
+##    &lt;chr&gt;     &lt;chr&gt;    &lt;date&gt;     &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;
+##  1 Donald T~ All pol~ 2020-09-18 2017-01-20 2017-01-22 Gallup   B           1500
+##  2 Donald T~ All pol~ 2020-09-18 2017-01-20 2017-01-22 Morning~ B/C         1992
+##  3 Donald T~ All pol~ 2020-09-18 2017-01-20 2017-01-24 Ipsos    B-          1632
+##  4 Donald T~ All pol~ 2020-09-18 2017-01-21 2017-01-23 Gallup   B           1500
+##  5 Donald T~ All pol~ 2020-09-18 2017-01-22 2017-01-24 Rasmuss~ C+          1500
+##  6 Donald T~ All pol~ 2020-09-18 2017-01-21 2017-01-25 Ipsos    B-          1651
+##  7 Donald T~ All pol~ 2020-09-18 2017-01-22 2017-01-24 Gallup   B           1500
+##  8 Donald T~ All pol~ 2020-09-18 2017-01-20 2017-01-25 Quinnip~ B+          1190
+##  9 Donald T~ All pol~ 2020-09-18 2017-01-23 2017-01-25 Rasmuss~ C+          1500
+## 10 Donald T~ All pol~ 2020-09-18 2017-01-23 2017-01-25 Gallup   B           1500
+## # ... with 15,528 more rows, and 14 more variables: population &lt;chr&gt;,
+## #   weight &lt;dbl&gt;, influence &lt;dbl&gt;, approve &lt;dbl&gt;, disapprove &lt;dbl&gt;,
+## #   adjusted_approve &lt;dbl&gt;, adjusted_disapprove &lt;dbl&gt;, multiversions &lt;chr&gt;,
+## #   tracking &lt;lgl&gt;, url &lt;chr&gt;, poll_id &lt;dbl&gt;, question_id &lt;dbl&gt;,
+## #   createddate &lt;chr&gt;, timestamp &lt;chr&gt;</code></pre>
+<pre class="r"><code># Import approval polls data
+approval_polllist &lt;- read_csv(&#39;https://projects.fivethirtyeight.com/trump-approval-data/approval_polllist.csv&#39;)
+
+glimpse(approval_polllist)</code></pre>
+<pre><code>## Rows: 15,538
+## Columns: 22
+## $ president           &lt;chr&gt; &quot;Donald Trump&quot;, &quot;Donald Trump&quot;, &quot;Donald Trump&quot;,...
+## $ subgroup            &lt;chr&gt; &quot;All polls&quot;, &quot;All polls&quot;, &quot;All polls&quot;, &quot;All pol...
+## $ modeldate           &lt;chr&gt; &quot;9/18/2020&quot;, &quot;9/18/2020&quot;, &quot;9/18/2020&quot;, &quot;9/18/20...
+## $ startdate           &lt;chr&gt; &quot;1/20/2017&quot;, &quot;1/20/2017&quot;, &quot;1/20/2017&quot;, &quot;1/21/20...
+## $ enddate             &lt;chr&gt; &quot;1/22/2017&quot;, &quot;1/22/2017&quot;, &quot;1/24/2017&quot;, &quot;1/23/20...
+## $ pollster            &lt;chr&gt; &quot;Gallup&quot;, &quot;Morning Consult&quot;, &quot;Ipsos&quot;, &quot;Gallup&quot;,...
+## $ grade               &lt;chr&gt; &quot;B&quot;, &quot;B/C&quot;, &quot;B-&quot;, &quot;B&quot;, &quot;C+&quot;, &quot;B-&quot;, &quot;B&quot;, &quot;B+&quot;, &quot;...
+## $ samplesize          &lt;dbl&gt; 1500, 1992, 1632, 1500, 1500, 1651, 1500, 1190,...
+## $ population          &lt;chr&gt; &quot;a&quot;, &quot;rv&quot;, &quot;a&quot;, &quot;a&quot;, &quot;lv&quot;, &quot;a&quot;, &quot;a&quot;, &quot;rv&quot;, &quot;lv&quot;...
+## $ weight              &lt;dbl&gt; 0.262, 0.680, 0.153, 0.243, 0.200, 0.142, 0.227...
+## $ influence           &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ approve             &lt;dbl&gt; 45.0, 46.0, 42.1, 45.0, 57.0, 42.3, 46.0, 36.0,...
+## $ disapprove          &lt;dbl&gt; 45.0, 37.0, 45.2, 46.0, 43.0, 45.8, 45.0, 44.0,...
+## $ adjusted_approve    &lt;dbl&gt; 45.8, 45.3, 43.2, 45.8, 51.6, 43.4, 46.8, 37.6,...
+## $ adjusted_disapprove &lt;dbl&gt; 43.6, 38.2, 43.8, 44.6, 44.5, 44.4, 43.6, 42.7,...
+## $ multiversions       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,...
+## $ tracking            &lt;lgl&gt; TRUE, NA, TRUE, TRUE, TRUE, TRUE, TRUE, NA, TRU...
+## $ url                 &lt;chr&gt; &quot;http://www.gallup.com/poll/201617/gallup-daily...
+## $ poll_id             &lt;dbl&gt; 49253, 49249, 49426, 49262, 49266, 49425, 49236...
+## $ question_id         &lt;dbl&gt; 77265, 77261, 77599, 77274, 77278, 77598, 77248...
+## $ createddate         &lt;chr&gt; &quot;1/23/2017&quot;, &quot;1/23/2017&quot;, &quot;3/1/2017&quot;, &quot;1/24/201...
+## $ timestamp           &lt;chr&gt; &quot;17:01:19 18 Sep 2020&quot;, &quot;17:01:19 18 Sep 2020&quot;,...</code></pre>
+<pre class="r"><code>?lubridate
+# Use `lubridate` to fix dates, as they are given as characters.
+
+# Converting date to number format, grouping by week and year
+
+converteddates &lt;- mdy(approval_polllist$enddate)
+week_no &lt;- week(converteddates)
+year_no &lt;- year(converteddates)
+
+ 
+
+modified_approval_polllist &lt;- approval_polllist  %&gt;% 
+  mutate(converteddates, week_no, year_no)
+
+ 
+
+# grouping by week and computing net rate and using the plotrix package to compute std.error
+
+library(&quot;plotrix&quot;)
+
+modified_approval_polllist &lt;-  modified_approval_polllist %&gt;%
+    mutate(Net_ratecalculation = (approve-disapprove)/(approve+disapprove)) %&gt;%
+    group_by(year_no, week_no) %&gt;%  
+  summarise(average_nrc = mean(Net_ratecalculation)*100, 
+            standard_error_of_net_rate = std.error(Net_ratecalculation)*100,
+            Degrees_of_freedom = length(Net_ratecalculation)-1)
+               
+
+
+#Computing confidence intervals of net rate
+
+ 
+
+modified_approval_polllist &lt;- 
+  modified_approval_polllist %&gt;% 
+  mutate(
+    upper_ribbondata = average_nrc + qt(.975, Degrees_of_freedom)*standard_error_of_net_rate,
+    lower_ribbondata_1 = average_nrc - qt(.975, Degrees_of_freedom)*standard_error_of_net_rate)
+
+ 
+
+#Plotting the graph
+
+ #creating the color palette
+
+
+custom_color_palette &lt;- c(&quot;#FF7F50&quot; ,&quot;#7FFF00&quot;, &quot;#00FFFF&quot;, &quot;#9400D3&quot;)
+
+ 
+graph_withoutColor &lt;-  ggplot(modified_approval_polllist) +
+  geom_line(aes(x=week_no, y=average_nrc , color = factor(year_no)))+
+  geom_ribbon(aes(x=week_no, ymin = lower_ribbondata_1, ymax = upper_ribbondata, fill = factor(year_no)), alpha=0.2)+
+ # geom_line(aes(x =  , y = 0 , ), color = &#39;orange&#39;)+
+  geom_hline(yintercept = 0 , color = &#39;orange&#39;)+
+  geom_point(aes(x = week_no, y = average_nrc, color = factor(year_no)))+
+  facet_wrap(~year_no)+
+  labs(y= &quot;Average Net Approval (%)&quot;, x = &quot;Week of the year&quot;) +
+ggtitle(label = &quot;Estimating Net Approval (approve - dissaprove) for Donald Trump&quot;, subtitle = &quot;Weekly average of all polls&quot;) +
+  scale_y_continuous(breaks = seq(-20, 7.5 , by = 2.5)) +
+  scale_x_continuous(breaks = seq(0, 52, by = 13))+
+#plotting the graph!+
+scale_colour_manual(aesthetics = &quot;custom_color_palette&quot;) 
+                                                                                                                
+graph_withoutColor  +theme_bw() + theme(legend.position = &quot;none&quot;)                                                                           </code></pre>
+<p><img src="/projects/project2/index_files/figure-html/unnamed-chunk-2-1.png" width="648" style="display: block; margin: auto;" /></p>
+<div id="compare-confidence-intervals" class="section level2">
+<h2>Compare Confidence Intervals</h2>
+<p>From the graph above, it can be inferred that irrespective of the week, Donald’s approval rating remains in the negative territory. A discerning sign, considering that the 2020 elections are right around the corner.</p>
+<p>Analysis on the confidence bands of week 15 &amp; 34 of 2020 lends new insights (please refer to the plot below), suggesting that the confidence interval is expanding as the election date approaches, suggesting greater variability in the voter’s perception of Trump. This can be a function of severe aberrations in voter perception, owing to socio-economic events such as crisis management during the Covid-19 Pandemic, Black Lives Matter movement &amp; President Obama’s speech condoning Republican policies.</p>
+<p><img src="/projects/project2/index_files/figure-html/unnamed-chunk-3-1.png" width="648" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+
+                        </div>
+                    </section>
+            <!-- Disqus Inject -->
+                
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="https://github.com/Vasudevpuri" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com/in/vasudevpuri" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Company Name</li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+
+    
+
+    
+
+    </body>
+</html>

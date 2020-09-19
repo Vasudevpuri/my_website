@@ -1,0 +1,177 @@
+---
+title: "GDP components over time and among countries"
+author: "Vasu Dev Puri"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    theme: flatly
+    highlight: zenburn
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+    code_folding: show
+---
+
+
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+
+```{r load-libraries, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(GGally)
+library(readxl)
+library(here)
+library(skimr)
+library(janitor)
+library(broom)
+library(tidyquant)
+library(infer)
+library(openintro)
+library(knitr)
+library(kableExtra)
+```
+
+
+# GDP components over time and among countries
+
+At the risk of oversimplifying things, the main components of gross domestic product, GDP are personal consumption (C), business investment (I), government spending (G) and net exports (exports - imports). 
+
+The GDP data we will look at is from the [United Nations' National Accounts Main Aggregates Database](https://unstats.un.org/unsd/snaama/Downloads), which contains estimates of total GDP and its components for all countries from 1970 to today. We will look at how GDP and its components have changed over time, and compare different countries and how much each component contributes to that country's GDP. The file we will work with is [GDP and its breakdown at constant 2010 prices in US Dollars](http://unstats.un.org/unsd/amaapi/api/file/6) and it has already been saved in the Data directory. Have a look at the Excel file to see how it is structured and organised
+
+
+```{r read_GDP_data,cache=TRUE}
+
+UN_GDP_data  <-  read_excel(here::here("data", "Download-GDPconstant-USD-countries.xls"), # Excel filename
+                sheet="Download-GDPconstant-USD-countr", # Sheet name
+                skip=2) # Number of rows to skip
+
+```
+
+ The first thing you need to do is to tidy the data, as it is in wide format and you must make it into long, tidy format. Please express all figures in billions (divide values by `1e9`, or $10^9$), and you want to rename the indicators into something shorter.
+
+
+```{r}
+
+tidy_GDP_data  <- UN_GDP_data  %>% 
+  pivot_longer(names_to = 'year', values_to  = 'Dollar Amount', cols = -c('CountryID', 'Country', 'IndicatorName')) 
+tidy_GDP_data$`Dollar Amount` <- tidy_GDP_data$`Dollar Amount` / 1e9
+
+
+tidy_GDP_data <- tidy_GDP_data %>%
+  pivot_wider(names_from = IndicatorName, values_from = `Dollar Amount`) %>%
+   rename("Household expenditure" = "Household consumption expenditure (including Non-profit institutions serving households)", "Government expenditure" = "General government final consumption expenditure", "Exports" = "Exports of goods and services", "Imports" = "Imports of goods and services")
+  
+# Let us compare GDP components for these 3 countries
+country_list <- c("United States","India", "Germany")
+```
+
+First, can you produce this plot?
+```{r}
+
+data_for_plot  <- tidy_GDP_data    %>% 
+  select(1:3, 5:7,9 ,10) %>%
+  filter(Country %in% c("Germany", "India", "United States")) %>%
+  pivot_longer(cols = 4:8, names_to = "GDP component", values_to = "Dollar Amount")
+
+data_for_plot
+  
+```
+
+```{r, fig.width=10,fig.asp=0.6}
+
+data_for_plot  <- tidy_GDP_data    %>% 
+  select(1:3, 5:7,9 ,10) %>%
+  filter(Country %in% c("Germany", "India", "United States")) %>%
+  pivot_longer(cols = 4:8, names_to = "GDP component", values_to = "Dollar Amount")
+
+data_for_plot
+
+plot <- data_for_plot %>%
+ggplot() + 
+         geom_line(aes(x=as.Date(paste0("02-02-",`year`),"%d-%m-%Y"), y=`Dollar Amount`, color=`GDP component`)) + 
+  facet_wrap(~Country) + 
+  labs(title = "GDP components over time", subtitle = "In constant 2010 USD", color = "Components of GDP", x = "", y = "Billion US$") +
+  theme_bw()
+
+plot
+         
+  
+```
+
+
+Secondly, we note that GDP is the sum of Household Expenditure (Consumption *C*), Gross Capital Formation (business investment *I*), Government Expenditure (G) and Net Exports (exports - imports) and calculate it as follows. 
+```{r}
+options(scipen = 999)
+
+calculated_GDP <- tidy_GDP_data %>%
+mutate(Net_Exports = `Exports`-`Imports`) %>%
+# *******double check what columns should be included in the TotGDP count column below**********
+  mutate(TotGDP = `Household expenditure`+ `Government expenditure`+ `Net_Exports` + `Gross capital formation`) %>%
+  select(2,3,11, 22) %>%
+  mutate(Percentage_Difference = (`TotGDP`-`Gross Domestic Product (GDP)`)/`Gross Domestic Product (GDP)`*100)
+
+
+  
+calculated_GDP
+
+GDP_calculations_for_2017 <- calculated_GDP %>%
+  filter(year == 2017)
+
+GDP_calculations_for_2017 %>%
+summarize(mean = mean(!is.na(Percentage_Difference)))
+
+GDP_Difference <- calculated_GDP %>%
+  filter(year == 2017, Country %in% c("Italy", "Afghanistan", "Germany", "India","Mozambique"))
+
+GDP_Difference 
+
+
+
+```
+The percentage difference between what we calculated as GDP and the GDP figure included in the dataframe varies from country to country and from year to year. However, we observe that the average difference in 2017 was, on average, less than 1%. When looking more closely at a handful of countries it becomes evident that there are exceptions, such as with Afghanistan, which has a % difference of 31%. 
+
+
+```{r gdp2, echo=FALSE, out.width="100%"}
+knitr::include_graphics(here::here("images", "gdp2.png"), error = FALSE)
+```
+
+From the chart above we can see that for all 3 countries Net Exports represents the smallest component of GDP, and vice versa, Household expenditure is the largest but its worthwhile that the latter has evolved differently in time across these countries (rising in the US, decreasing in India and plateauing in Germany). Gross capital formation has been rising sharply in India since 2000, whilst it has remained relatively constant in the US and Germany. Government expenditure instead has been fairly constant across all 3 countries, with a slight decline for the US and it has the same weight on GDP as Gross Capital formation for US and Germany, whilst it is much smaller component for India. 
+
+
+```{r,fig.width=10,fig.asp=0.6}
+
+data_for_plot  <- tidy_GDP_data    %>% 
+  select(1:3, 5:7,9 ,10) %>%
+  filter(Country %in% c("Italy", "China", "United Arab Emirates")) %>%
+  pivot_longer(cols = 4:8, names_to = "GDP component", values_to = "Dollar Amount")
+
+data_for_plot
+
+plot <- data_for_plot %>%
+ggplot() + 
+  geom_line(aes(x=as.Date(paste0("02-02-",`year`),"%d-%m-%Y"), y=`Dollar Amount`, color=`GDP component`)) + 
+  facet_wrap(~Country) + 
+  labs(title = "GDP components over time", subtitle = "In constant 2010 USD", color = "Components of GDP", x = "", y = "Billion US$") +
+  theme_bw() 
+
+plot
+         
+  
+```
+

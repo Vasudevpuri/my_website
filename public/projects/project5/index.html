@@ -1,0 +1,274 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="By way of introduction, I am Vasu Dev Puri and am living in United Arab Emirates, Dubai. I am currently working with the Valuations and Modelling team at PwC Deals through which I’ve worked on several fair value, business restructuring / turnaround , asset optimization, business strategy, purchase price allocations, synthetic credit ratings and business model review engagements. In addition, I have also built benchmarking and interactive dashboards running on live data from Bloomberg / Capital IQ, using Data Analytic tools such as Power BI and Power Pivot.">
+	<meta name="author" content="Vasu Dev Puri">
+	<meta name="generator" content="Hugo 0.74.3" />
+	<title>GDP components over time and among countries &middot; Portfolio website for Vasu Puri</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/" class="logo"><strong>Vasu Dev Puri</strong> <span></span></a>
+        <nav>
+            <a href="#menu"></a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="/">Home</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>GDP components over time and among countries</h1>
+                            </header>
+                            
+                            
+
+
+<div id="gdp-components-over-time-and-among-countries" class="section level1">
+<h1>GDP components over time and among countries</h1>
+<p>At the risk of oversimplifying things, the main components of gross domestic product, GDP are personal consumption (C), business investment (I), government spending (G) and net exports (exports - imports).</p>
+<p>The GDP data we will look at is from the <a href="https://unstats.un.org/unsd/snaama/Downloads">United Nations’ National Accounts Main Aggregates Database</a>, which contains estimates of total GDP and its components for all countries from 1970 to today. We will look at how GDP and its components have changed over time, and compare different countries and how much each component contributes to that country’s GDP. The file we will work with is <a href="http://unstats.un.org/unsd/amaapi/api/file/6">GDP and its breakdown at constant 2010 prices in US Dollars</a> and it has already been saved in the Data directory. Have a look at the Excel file to see how it is structured and organised</p>
+<pre class="r"><code>UN_GDP_data  &lt;-  read_excel(here::here(&quot;data&quot;, &quot;Download-GDPconstant-USD-countries.xls&quot;), # Excel filename
+                sheet=&quot;Download-GDPconstant-USD-countr&quot;, # Sheet name
+                skip=2) # Number of rows to skip</code></pre>
+<p>The first thing you need to do is to tidy the data, as it is in wide format and you must make it into long, tidy format. Please express all figures in billions (divide values by <code>1e9</code>, or <span class="math inline">\(10^9\)</span>), and you want to rename the indicators into something shorter.</p>
+<pre class="r"><code>tidy_GDP_data  &lt;- UN_GDP_data  %&gt;% 
+  pivot_longer(names_to = &#39;year&#39;, values_to  = &#39;Dollar Amount&#39;, cols = -c(&#39;CountryID&#39;, &#39;Country&#39;, &#39;IndicatorName&#39;)) 
+tidy_GDP_data$`Dollar Amount` &lt;- tidy_GDP_data$`Dollar Amount` / 1e9
+
+
+tidy_GDP_data &lt;- tidy_GDP_data %&gt;%
+  pivot_wider(names_from = IndicatorName, values_from = `Dollar Amount`) %&gt;%
+   rename(&quot;Household expenditure&quot; = &quot;Household consumption expenditure (including Non-profit institutions serving households)&quot;, &quot;Government expenditure&quot; = &quot;General government final consumption expenditure&quot;, &quot;Exports&quot; = &quot;Exports of goods and services&quot;, &quot;Imports&quot; = &quot;Imports of goods and services&quot;)
+  
+# Let us compare GDP components for these 3 countries
+country_list &lt;- c(&quot;United States&quot;,&quot;India&quot;, &quot;Germany&quot;)</code></pre>
+<p>First, can you produce this plot?</p>
+<pre class="r"><code>data_for_plot  &lt;- tidy_GDP_data    %&gt;% 
+  select(1:3, 5:7,9 ,10) %&gt;%
+  filter(Country %in% c(&quot;Germany&quot;, &quot;India&quot;, &quot;United States&quot;)) %&gt;%
+  pivot_longer(cols = 4:8, names_to = &quot;GDP component&quot;, values_to = &quot;Dollar Amount&quot;)
+
+data_for_plot</code></pre>
+<pre><code>## # A tibble: 720 x 5
+##    CountryID Country year  `GDP component`         `Dollar Amount`
+##        &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;                             &lt;dbl&gt;
+##  1       276 Germany 1970  Household expenditure              872.
+##  2       276 Germany 1970  Government expenditure             280.
+##  3       276 Germany 1970  Gross capital formation            442.
+##  4       276 Germany 1970  Exports                            174.
+##  5       276 Germany 1970  Imports                            188.
+##  6       276 Germany 1971  Household expenditure              919.
+##  7       276 Germany 1971  Government expenditure             298.
+##  8       276 Germany 1971  Gross capital formation            444.
+##  9       276 Germany 1971  Exports                            178.
+## 10       276 Germany 1971  Imports                            202.
+## # ... with 710 more rows</code></pre>
+<pre class="r"><code>data_for_plot  &lt;- tidy_GDP_data    %&gt;% 
+  select(1:3, 5:7,9 ,10) %&gt;%
+  filter(Country %in% c(&quot;Germany&quot;, &quot;India&quot;, &quot;United States&quot;)) %&gt;%
+  pivot_longer(cols = 4:8, names_to = &quot;GDP component&quot;, values_to = &quot;Dollar Amount&quot;)
+
+data_for_plot</code></pre>
+<pre><code>## # A tibble: 720 x 5
+##    CountryID Country year  `GDP component`         `Dollar Amount`
+##        &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;                             &lt;dbl&gt;
+##  1       276 Germany 1970  Household expenditure              872.
+##  2       276 Germany 1970  Government expenditure             280.
+##  3       276 Germany 1970  Gross capital formation            442.
+##  4       276 Germany 1970  Exports                            174.
+##  5       276 Germany 1970  Imports                            188.
+##  6       276 Germany 1971  Household expenditure              919.
+##  7       276 Germany 1971  Government expenditure             298.
+##  8       276 Germany 1971  Gross capital formation            444.
+##  9       276 Germany 1971  Exports                            178.
+## 10       276 Germany 1971  Imports                            202.
+## # ... with 710 more rows</code></pre>
+<pre class="r"><code>plot &lt;- data_for_plot %&gt;%
+ggplot() + 
+         geom_line(aes(x=as.Date(paste0(&quot;02-02-&quot;,`year`),&quot;%d-%m-%Y&quot;), y=`Dollar Amount`, color=`GDP component`)) + 
+  facet_wrap(~Country) + 
+  labs(title = &quot;GDP components over time&quot;, subtitle = &quot;In constant 2010 USD&quot;, color = &quot;Components of GDP&quot;, x = &quot;&quot;, y = &quot;Billion US$&quot;) +
+  theme_bw()
+
+plot</code></pre>
+<p><img src="/projects/project5/index_files/figure-html/unnamed-chunk-3-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Secondly, we note that GDP is the sum of Household Expenditure (Consumption <em>C</em>), Gross Capital Formation (business investment <em>I</em>), Government Expenditure (G) and Net Exports (exports - imports) and calculate it as follows.</p>
+<pre class="r"><code>options(scipen = 999)
+
+calculated_GDP &lt;- tidy_GDP_data %&gt;%
+mutate(Net_Exports = `Exports`-`Imports`) %&gt;%
+# *******double check what columns should be included in the TotGDP count column below**********
+  mutate(TotGDP = `Household expenditure`+ `Government expenditure`+ `Net_Exports` + `Gross capital formation`) %&gt;%
+  select(2,3,11, 22) %&gt;%
+  mutate(Percentage_Difference = (`TotGDP`-`Gross Domestic Product (GDP)`)/`Gross Domestic Product (GDP)`*100)
+
+
+  
+calculated_GDP</code></pre>
+<pre><code>## # A tibble: 10,560 x 5
+##    Country     year  `Gross Domestic Product (GDP)` TotGDP Percentage_Difference
+##    &lt;chr&gt;       &lt;chr&gt;                          &lt;dbl&gt;  &lt;dbl&gt;                 &lt;dbl&gt;
+##  1 Afghanistan 1970                           10.7    6.35                 -40.8
+##  2 Afghanistan 1971                           10.7    6.15                 -42.5
+##  3 Afghanistan 1972                            8.94   5.94                 -33.6
+##  4 Afghanistan 1973                            9.20   6.49                 -29.4
+##  5 Afghanistan 1974                            9.70   7.09                 -26.9
+##  6 Afghanistan 1975                           10.3    7.47                 -27.5
+##  7 Afghanistan 1976                           10.9    8.20                 -24.6
+##  8 Afghanistan 1977                           10.3    8.49                 -17.7
+##  9 Afghanistan 1978                           11.1    8.98                 -19.0
+## 10 Afghanistan 1979                           10.8    8.68                 -19.6
+## # ... with 10,550 more rows</code></pre>
+<pre class="r"><code>GDP_calculations_for_2017 &lt;- calculated_GDP %&gt;%
+  filter(year == 2017)
+
+GDP_calculations_for_2017 %&gt;%
+summarize(mean = mean(!is.na(Percentage_Difference)))</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##    mean
+##   &lt;dbl&gt;
+## 1 0.959</code></pre>
+<pre class="r"><code>GDP_Difference &lt;- calculated_GDP %&gt;%
+  filter(year == 2017, Country %in% c(&quot;Italy&quot;, &quot;Afghanistan&quot;, &quot;Germany&quot;, &quot;India&quot;,&quot;Mozambique&quot;))
+
+GDP_Difference </code></pre>
+<pre><code>## # A tibble: 5 x 5
+##   Country     year  `Gross Domestic Product (GDP)` TotGDP Percentage_Difference
+##   &lt;chr&gt;       &lt;chr&gt;                          &lt;dbl&gt;  &lt;dbl&gt;                 &lt;dbl&gt;
+## 1 Afghanistan 2017                            22.2   28.5               28.6   
+## 2 Germany     2017                          3884.  3882.                -0.0411
+## 3 India       2017                          2617.  2565.                -2.00  
+## 4 Italy       2017                          2119.  2115.                -0.164 
+## 5 Mozambique  2017                            15.4   15.3               -0.900</code></pre>
+<p>The percentage difference between what we calculated as GDP and the GDP figure included in the dataframe varies from country to country and from year to year. However, we observe that the average difference in 2017 was, on average, less than 1%. When looking more closely at a handful of countries it becomes evident that there are exceptions, such as with Afghanistan, which has a % difference of 31%.</p>
+<p><img src="C:/Users/Vasudev Puri/Desktop/my_website_3/images/gdp2.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>From the chart above we can see that for all 3 countries Net Exports represents the smallest component of GDP, and vice versa, Household expenditure is the largest but its worthwhile that the latter has evolved differently in time across these countries (rising in the US, decreasing in India and plateauing in Germany). Gross capital formation has been rising sharply in India since 2000, whilst it has remained relatively constant in the US and Germany. Government expenditure instead has been fairly constant across all 3 countries, with a slight decline for the US and it has the same weight on GDP as Gross Capital formation for US and Germany, whilst it is much smaller component for India.</p>
+<pre class="r"><code>data_for_plot  &lt;- tidy_GDP_data    %&gt;% 
+  select(1:3, 5:7,9 ,10) %&gt;%
+  filter(Country %in% c(&quot;Italy&quot;, &quot;China&quot;, &quot;United Arab Emirates&quot;)) %&gt;%
+  pivot_longer(cols = 4:8, names_to = &quot;GDP component&quot;, values_to = &quot;Dollar Amount&quot;)
+
+data_for_plot</code></pre>
+<pre><code>## # A tibble: 720 x 5
+##    CountryID Country year  `GDP component`         `Dollar Amount`
+##        &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;                             &lt;dbl&gt;
+##  1       156 China   1970  Household expenditure            108.  
+##  2       156 China   1970  Government expenditure            19.3 
+##  3       156 China   1970  Gross capital formation           67.6 
+##  4       156 China   1970  Exports                            5.08
+##  5       156 China   1970  Imports                            5.86
+##  6       156 China   1971  Household expenditure            112.  
+##  7       156 China   1971  Government expenditure            22.6 
+##  8       156 China   1971  Gross capital formation           73.8 
+##  9       156 China   1971  Exports                            6.08
+## 10       156 China   1971  Imports                            5.87
+## # ... with 710 more rows</code></pre>
+<pre class="r"><code>plot &lt;- data_for_plot %&gt;%
+ggplot() + 
+  geom_line(aes(x=as.Date(paste0(&quot;02-02-&quot;,`year`),&quot;%d-%m-%Y&quot;), y=`Dollar Amount`, color=`GDP component`)) + 
+  facet_wrap(~Country) + 
+  labs(title = &quot;GDP components over time&quot;, subtitle = &quot;In constant 2010 USD&quot;, color = &quot;Components of GDP&quot;, x = &quot;&quot;, y = &quot;Billion US$&quot;) +
+  theme_bw() 
+
+plot</code></pre>
+<p><img src="/projects/project5/index_files/figure-html/unnamed-chunk-5-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+
+                        </div>
+                    </section>
+            <!-- Disqus Inject -->
+                
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="https://github.com/Vasudevpuri" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com/in/vasudevpuri" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Company Name</li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+
+    
+
+    
+
+    </body>
+</html>
