@@ -1,0 +1,177 @@
+---
+title: "Can Trump trump the 2020 US Presdential Elections?"
+author: "Vasu Dev Puri"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    theme: flatly
+    highlight: zenburn
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+    code_folding: show
+---
+
+
+```{r, setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     
+  size="small")   
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+
+```{r load-libraries, include=FALSE}
+library(tidyverse)  
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(here)
+library(skimr)
+library(janitor)
+library(httr)
+library(readxl)
+library(vroom)
+library(kableExtra)
+library(lubridate)
+library(infer)
+```
+
+
+# Trump's Approval Margins
+
+In the following section of the report we will analyze data on [fivethirtyeight.com](https://projects.fivethirtyeight.com/trump-approval-ratings) on all polls that track the president's approval
+
+```{r, cache=TRUE}
+ 
+#Import approval polls data
+approval_polllist <- read_csv(here::here('data', 'approval_polllist.csv'))
+
+glimpse(approval_polllist)
+
+# Use `lubridate` to fix dates, as they are given as characters.
+
+approval_polllist$modeldate <- mdy(approval_polllist$modeldate)
+approval_polllist$startdate <- mdy(approval_polllist$startdate)
+approval_polllist$enddate <- mdy(approval_polllist$enddate)
+
+approval_polllist
+
+```
+
+
+
+```{r, cache=TRUE}
+# Import approval polls data
+approval_polllist <- read_csv('https://projects.fivethirtyeight.com/trump-approval-data/approval_polllist.csv')
+
+glimpse(approval_polllist)
+?lubridate
+# Use `lubridate` to fix dates, as they are given as characters.
+
+# Converting date to number format, grouping by week and year
+
+converteddates <- mdy(approval_polllist$enddate)
+week_no <- week(converteddates)
+year_no <- year(converteddates)
+
+ 
+
+modified_approval_polllist <- approval_polllist  %>% 
+  mutate(converteddates, week_no, year_no)
+
+ 
+
+# grouping by week and computing net rate and using the plotrix package to compute std.error
+
+library("plotrix")
+
+modified_approval_polllist <-  modified_approval_polllist %>%
+    mutate(Net_ratecalculation = (approve-disapprove)/(approve+disapprove)) %>%
+    group_by(year_no, week_no) %>%  
+  summarise(average_nrc = mean(Net_ratecalculation)*100, 
+            standard_error_of_net_rate = std.error(Net_ratecalculation)*100,
+            Degrees_of_freedom = length(Net_ratecalculation)-1)
+               
+
+
+#Computing confidence intervals of net rate
+
+ 
+
+modified_approval_polllist <- 
+  modified_approval_polllist %>% 
+  mutate(
+    upper_ribbondata = average_nrc + qt(.975, Degrees_of_freedom)*standard_error_of_net_rate,
+    lower_ribbondata_1 = average_nrc - qt(.975, Degrees_of_freedom)*standard_error_of_net_rate)
+
+ 
+
+#Plotting the graph
+
+ #creating the color palette
+
+
+custom_color_palette <- c("#FF7F50" ,"#7FFF00", "#00FFFF", "#9400D3")
+
+ 
+graph_withoutColor <-  ggplot(modified_approval_polllist) +
+  geom_line(aes(x=week_no, y=average_nrc , color = factor(year_no)))+
+  geom_ribbon(aes(x=week_no, ymin = lower_ribbondata_1, ymax = upper_ribbondata, fill = factor(year_no)), alpha=0.2)+
+ # geom_line(aes(x =  , y = 0 , ), color = 'orange')+
+  geom_hline(yintercept = 0 , color = 'orange')+
+  geom_point(aes(x = week_no, y = average_nrc, color = factor(year_no)))+
+  facet_wrap(~year_no)+
+  labs(y= "Average Net Approval (%)", x = "Week of the year") +
+ggtitle(label = "Estimating Net Approval (approve - dissaprove) for Donald Trump", subtitle = "Weekly average of all polls") +
+  scale_y_continuous(breaks = seq(-20, 7.5 , by = 2.5)) +
+  scale_x_continuous(breaks = seq(0, 52, by = 13))+
+#plotting the graph!+
+scale_colour_manual(aesthetics = "custom_color_palette") 
+                                                                                                                
+graph_withoutColor  +theme_bw() + theme(legend.position = "none")                                                                           
+                                                                                                                                                                                                         
+```
+
+
+## Compare Confidence Intervals
+
+From the graph above, it can be inferred that irrespective of the week, Donald's approval rating remains in the negative territory. A discerning sign, considering that the 2020 elections are right around the corner.
+
+Analysis on the confidence bands of week 15 & 34 of 2020 lends new insights (please refer to the plot below), suggesting that the confidence interval is expanding as the election date approaches, suggesting greater variability in the voter's perception of Trump. This can be a function of severe aberrations in voter perception, owing to socio-economic events such as crisis management during the Covid-19 Pandemic, Black Lives Matter movement & President Obama's speech condoning Republican policies.   
+
+```{r, echo = FALSE}
+
+#plot CI for trump approval ratings in week 15 and 34
+modified_approval_polllist %>%
+  filter((week_no == 15 | week_no == 34) & year_no == 2020 ) %>%
+  mutate(color  = ifelse(week_no == 15,  'Yes' , 'no'))%>%
+  ggplot() + 
+  #plottting error bars 
+  geom_errorbar(aes(x = week_no , 
+                    y = average_nrc ,
+                   ymax  = upper_ribbondata,
+                   ymin  = lower_ribbondata_1,
+                   width = 0.4,
+                   color = color,
+                   ),size = 2) +
+  geom_point(aes(x = week_no , 
+                    y = average_nrc ,
+                 color = color,
+                 fill = color), shape = 21 , size = 4) +
+ labs(y= "Average Net Approval (%)", x = "Week of the year") +
+ggtitle(label = "Opinions about Trump vary as election approaches", subtitle = "Average of net approval (approve - disapprove) for Trump on selected weeks") +
+  scale_colour_manual(aesthetics = "custom_color_palette") +
+  theme_bw() +
+  theme(legend.position = 'none')
+```
+
