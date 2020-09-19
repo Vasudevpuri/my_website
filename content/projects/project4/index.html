@@ -1,6 +1,5 @@
 ---
-title: "How has public transport been impacted during 
-the Covid-19 pandemic?"
+title: "Impact of COVID on Tfl rentals" 
 author: "Vasu Dev Puri"
 date: "2020-09-19"
 output:
@@ -18,8 +17,10 @@ output:
 <div id="excess-rentals-in-tfl-bike-sharing" class="section level1">
 <h1>Excess rentals in TfL bike sharing</h1>
 <p>Below we analyse the TfL data on how many bikes are hired every single day in London.</p>
+<pre class="r"><code># Source of our data set
+url &lt;- &quot;https://data.london.gov.uk/download/number-bicycle-hires/ac29363e-e0cb-47cc-a97a-e216d900a6b0/tfl-daily-cycle-hires.xlsx&quot;</code></pre>
 <p>In the following graphs we create a facet grid that plots bikes hired by month and year.</p>
-<p><img src="C:/Users/Vasudev%20Puri/Desktop/my_website_3/images/tfl_distributions_monthly.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/projects/project4/index_files/figure-html/tfl_month_year_grid-1.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>Looking at May and June in 2020 (after lockdown) we can see that, compared to the previous years, there is a significant increase in the rentals owing to a pent up demand for alternative public transportation to the tube and the bus because of the Covid-19 pandemic. In the prior year, the trend is different, as more people tend to use for-hire bicycles for the first 5 months of 2019.</p>
 <p>It can hence be concluded that the lock down inhibited people from moving, and directly impacted the utilisation of public transport in 2020. Another interesting fact would be the carbon tax system implemented in inner london, discouraging people to use personal automibiles within the city. This data point leads us to conclude that bicycles are a common mode of transport in the city, and covid restrictions profoundly impacted their utilisation.</p>
 <pre class="r"><code>#calcuating the overall monthly average 

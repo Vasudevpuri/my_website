@@ -111,7 +111,7 @@ disqusShortname = ""
 
     [[params.tiles.showcase]]
       title = "Analysis of bike rental data from TfL bike sharing"
-      subtitle = "Do Londoners like biking all year round?"
+      subtitle = "How COVID impacted Tfl"
       image = "londonerbiking.jpg"
       url = "projects/project4"
 

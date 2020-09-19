@@ -8,21 +8,21 @@
 	<meta name="description" content="By way of introduction, I am Vasu Dev Puri and am living in United Arab Emirates, Dubai. I am currently working with the Valuations and Modelling team at PwC Deals through which I’ve worked on several fair value, business restructuring / turnaround , asset optimization, business strategy, purchase price allocations, synthetic credit ratings and business model review engagements. In addition, I have also built benchmarking and interactive dashboards running on live data from Bloomberg / Capital IQ, using Data Analytic tools such as Power BI and Power Pivot.">
 	<meta name="author" content="Vasu Dev Puri">
 	<meta name="generator" content="Hugo 0.74.3" />
-	<title>How has public transport been impacted during the Covid-19 pandemic? &middot; Portfolio website for Vasu Puri</title>
+	<title>Impact of COVID on Tfl rentals &middot; Portfolio website for Vasu Puri</title>
 	<!-- Stylesheets -->
 	
-	<link rel="stylesheet" href="https://vasudevpuri.netlify.app/css/main.css"/>
+	<link rel="stylesheet" href="/css/main.css"/>
 	
 	
 
 	
 
 	<!-- Custom Fonts -->
-	<link href="https://vasudevpuri.netlify.app/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 	
-	<link rel="shortcut icon" type="image/x-icon" href="https://vasudevpuri.netlify.app/favicon.ico">
-	<link rel="icon" type="image/x-icon" href="https://vasudevpuri.netlify.app/favicon.ico">
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
 	
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -40,7 +40,7 @@
 
             <!-- Header -->
     <header id="header" class="alt">
-        <a href="https://vasudevpuri.netlify.app/" class="logo"><strong>Vasu Dev Puri</strong> <span></span></a>
+        <a href="/" class="logo"><strong>Vasu Dev Puri</strong> <span></span></a>
         <nav>
             <a href="#menu"></a>
         </nav>
@@ -50,7 +50,7 @@
     <nav id="menu">
         <ul class="links">
             
-                <li><a href="https://vasudevpuri.netlify.app/">Home</a></li>
+                <li><a href="/">Home</a></li>
             
 
         </ul>
@@ -67,7 +67,7 @@
                     <section id="one">
                         <div class="inner">
                             <header class="major">
-                                <h1>How has public transport been impacted during the Covid-19 pandemic?</h1>
+                                <h1>Impact of COVID on Tfl rentals</h1>
                             </header>
                             
                             
@@ -76,8 +76,10 @@
 <div id="excess-rentals-in-tfl-bike-sharing" class="section level1">
 <h1>Excess rentals in TfL bike sharing</h1>
 <p>Below we analyse the TfL data on how many bikes are hired every single day in London.</p>
+<pre class="r"><code># Source of our data set
+url &lt;- &quot;https://data.london.gov.uk/download/number-bicycle-hires/ac29363e-e0cb-47cc-a97a-e216d900a6b0/tfl-daily-cycle-hires.xlsx&quot;</code></pre>
 <p>In the following graphs we create a facet grid that plots bikes hired by month and year.</p>
-<p><img src="C:/Users/Vasudev%20Puri/Desktop/my_website_3/images/tfl_distributions_monthly.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/projects/project4/index_files/figure-html/tfl_month_year_grid-1.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>Looking at May and June in 2020 (after lockdown) we can see that, compared to the previous years, there is a significant increase in the rentals owing to a pent up demand for alternative public transportation to the tube and the bus because of the Covid-19 pandemic. In the prior year, the trend is different, as more people tend to use for-hire bicycles for the first 5 months of 2019.</p>
 <p>It can hence be concluded that the lock down inhibited people from moving, and directly impacted the utilisation of public transport in 2020. Another interesting fact would be the carbon tax system implemented in inner london, discouraging people to use personal automibiles within the city. This data point leads us to conclude that bicycles are a common mode of transport in the city, and covid restrictions profoundly impacted their utilisation.</p>
 <pre class="r"><code>#calcuating the overall monthly average 
@@ -211,16 +213,16 @@ theme(aspect.ratio = 1.4)</code></pre>
     <!-- Scripts -->
         <!-- Scripts -->
     <!-- jQuery -->
-    <script src="https://vasudevpuri.netlify.app/js/jquery.min.js"></script>
-    <script src="https://vasudevpuri.netlify.app/js/jquery.scrolly.min.js"></script>
-    <script src="https://vasudevpuri.netlify.app/js/jquery.scrollex.min.js"></script>
-    <script src="https://vasudevpuri.netlify.app/js/skel.min.js"></script>
-    <script src="https://vasudevpuri.netlify.app/js/util.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
 
     
 
     <!-- Main JS -->
-    <script src="https://vasudevpuri.netlify.app/js/main.js"></script>
+    <script src="/js/main.js"></script>
 
     
 

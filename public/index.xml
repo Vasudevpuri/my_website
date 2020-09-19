@@ -2,108 +2,108 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Portfolio website for Vasu Puri</title>
-    <link>https://vasudevpuri.netlify.app/</link>
+    <link>/</link>
     <description>Recent content on Portfolio website for Vasu Puri</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 19 Sep 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://vasudevpuri.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Can Trump trump the 2020 US Presdential Elections?</title>
-      <link>https://vasudevpuri.netlify.app/projects/project2/</link>
+      <link>/projects/project2/</link>
       <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://vasudevpuri.netlify.app/projects/project2/</guid>
+      <guid>/projects/project2/</guid>
       <description>Trump’s Approval MarginsIn the following section of the report we will analyze data on fivethirtyeight.com on all polls that track the president’s approval
 #Import approval polls dataapproval_polllist &amp;lt;- read_csv(&amp;quot;https://projects.fivethirtyeight.com/trump-approval-data/approval_polllist.csv&amp;quot;)glimpse(approval_polllist)## Rows: 15,538## Columns: 22## $ president &amp;lt;chr&amp;gt; &amp;quot;Donald Trump&amp;quot;, &amp;quot;Donald Trump&amp;quot;, &amp;quot;Donald Trump&amp;quot;,...## $ subgroup &amp;lt;chr&amp;gt; &amp;quot;All polls&amp;quot;, &amp;quot;All polls&amp;quot;, &amp;quot;All polls&amp;quot;, &amp;quot;All pol...## $ modeldate &amp;lt;chr&amp;gt; &amp;quot;9/18/2020&amp;quot;, &amp;quot;9/18/2020&amp;quot;, &amp;quot;9/18/2020&amp;quot;, &amp;quot;9/18/20...## $ startdate &amp;lt;chr&amp;gt; &amp;quot;1/20/2017&amp;quot;, &amp;quot;1/20/2017&amp;quot;, &amp;quot;1/20/2017&amp;quot;, &amp;quot;1/21/20.</description>
     </item>
     
     <item>
       <title>Climate Change Analysis - Is it really a hoax?</title>
-      <link>https://vasudevpuri.netlify.app/projects/project3/</link>
+      <link>/projects/project3/</link>
       <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://vasudevpuri.netlify.app/projects/project3/</guid>
+      <guid>/projects/project3/</guid>
       <description>Climate change and temperature anomaliesIn the first section of this report we will be studying climate change by looking at temperature anomalies recorded since 1880, specifically the deviations from the expected temperature. The raw data is the Combined Land-Surface Air and Sea-Surface Water Temperature Anomalies in the Northern Hemisphere at NASA’s Goddard Institute for Space Studies. The tabular data of temperature anomalies can be found here.
 weather &amp;lt;- read_csv(&amp;quot;https://data.</description>
     </item>
     
     <item>
       <title>GDP components over time and among countries</title>
-      <link>https://vasudevpuri.netlify.app/projects/project5/</link>
+      <link>/projects/project5/</link>
       <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://vasudevpuri.netlify.app/projects/project5/</guid>
+      <guid>/projects/project5/</guid>
       <description>GDP components over time and among countriesAt the risk of oversimplifying things, the main components of gross domestic product, GDP are personal consumption (C), business investment (I), government spending (G) and net exports (exports - imports).
 The GDP data we will look at is from the United Nations’ National Accounts Main Aggregates Database, which contains estimates of total GDP and its components for all countries from 1970 to today.</description>
     </item>
     
     <item>
-      <title>How has public transport been impacted during the Covid-19 pandemic?</title>
-      <link>https://vasudevpuri.netlify.app/projects/project4/</link>
+      <title>Impact of COVID on Tfl rentals</title>
+      <link>/projects/project4/</link>
       <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://vasudevpuri.netlify.app/projects/project4/</guid>
+      <guid>/projects/project4/</guid>
       <description>Excess rentals in TfL bike sharingBelow we analyse the TfL data on how many bikes are hired every single day in London.
-In the following graphs we create a facet grid that plots bikes hired by month and year.
+# Source of our data seturl &amp;lt;- &amp;quot;https://data.london.gov.uk/download/number-bicycle-hires/ac29363e-e0cb-47cc-a97a-e216d900a6b0/tfl-daily-cycle-hires.xlsx&amp;quot;In the following graphs we create a facet grid that plots bikes hired by month and year.
 Looking at May and June in 2020 (after lockdown) we can see that, compared to the previous years, there is a significant increase in the rentals owing to a pent up demand for alternative public transportation to the tube and the bus because of the Covid-19 pandemic.</description>
     </item>
     
     <item>
       <title>My story</title>
-      <link>https://vasudevpuri.netlify.app/projects/project1/</link>
+      <link>/projects/project1/</link>
       <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://vasudevpuri.netlify.app/projects/project1/</guid>
+      <guid>/projects/project1/</guid>
       <description>About Vasu Dev PuriI am currently reading for my Masters in Analytics and Management at London Business School and undergoing rigorous training in academic disciplines surrounding Data Analytics, Strategy &amp;amp; Management. My experience, thus far, has provided latitude to appraise businesses through a sector-agnostic approach, coupling the need to identify opportunistic liquid assets using fundamental &amp;amp; thematic analysis.
 Covid-19, a rather unfortunate sign of our times, offers an unparalleled up scaling potential arising from exposure to market momentum.</description>
     </item>
     
     <item>
       <title>Aliquam</title>
-      <link>https://vasudevpuri.netlify.app/blogs/aliquam/</link>
+      <link>/blogs/aliquam/</link>
       <pubDate>Tue, 31 Oct 2017 22:42:51 -0500</pubDate>
       
-      <guid>https://vasudevpuri.netlify.app/blogs/aliquam/</guid>
+      <guid>/blogs/aliquam/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Tempus</title>
-      <link>https://vasudevpuri.netlify.app/blogs/tempus/</link>
+      <link>/blogs/tempus/</link>
       <pubDate>Tue, 31 Oct 2017 22:26:13 -0500</pubDate>
       
-      <guid>https://vasudevpuri.netlify.app/blogs/tempus/</guid>
+      <guid>/blogs/tempus/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Magna</title>
-      <link>https://vasudevpuri.netlify.app/blogs/magna/</link>
+      <link>/blogs/magna/</link>
       <pubDate>Tue, 31 Oct 2017 22:26:09 -0500</pubDate>
       
-      <guid>https://vasudevpuri.netlify.app/blogs/magna/</guid>
+      <guid>/blogs/magna/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ipsum</title>
-      <link>https://vasudevpuri.netlify.app/blogs/ipsum/</link>
+      <link>/blogs/ipsum/</link>
       <pubDate>Tue, 31 Oct 2017 21:28:43 -0500</pubDate>
       
-      <guid>https://vasudevpuri.netlify.app/blogs/ipsum/</guid>
+      <guid>/blogs/ipsum/</guid>
       <description>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis magna sed nunc rhoncus condimentum sem. In efficitur ligula tate urna. Maecenas massa sed magna lacinia magna pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis tempus.</description>
     </item>
     
     <item>
       <title>Hello R Markdown</title>
-      <link>https://vasudevpuri.netlify.app/post/2015-07-23-r-rmarkdown/</link>
+      <link>/post/2015-07-23-r-rmarkdown/</link>
       <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
       
-      <guid>https://vasudevpuri.netlify.app/post/2015-07-23-r-rmarkdown/</guid>
+      <guid>/post/2015-07-23-r-rmarkdown/</guid>
       <description>R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
 You can embed an R code chunk like this:
 summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
