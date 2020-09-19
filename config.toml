@@ -38,8 +38,8 @@ disqusShortname = ""
   # Navigation Section
   [params.navigation]
     title = "Vasu Dev Puri"
-    #subtitle = "By HTML5 Up"
-    #menu = "Menu"
+    #subtitle = "By HTML5 Up" 
+    #menu = "Menu"  
     # Optional logo as brand stored in img/
     # logo = "logo.png"
 
