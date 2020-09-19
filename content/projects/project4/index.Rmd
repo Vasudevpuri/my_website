@@ -1,6 +1,5 @@
 ---
-title: "How has public transport been impacted during 
-the Covid-19 pandemic?"
+title: "Impact of COVID on Tfl rentals" 
 author: "Vasu Dev Puri"
 date: "`r Sys.Date()`"
 output:
