@@ -6,7 +6,7 @@
     <description>Recent content in Projects on Portfolio website for Vasu Puri</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 19 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 20 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/projects/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,11 +14,21 @@
     <item>
       <title>Can Trump trump the 2020 US Presdential Elections?</title>
       <link>/projects/project2/</link>
-      <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 20 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>/projects/project2/</guid>
       <description>Trump’s Approval MarginsIn the following section of the report we will analyze data on fivethirtyeight.com on all polls that track the president’s approval
 #Import approval polls dataapproval_polllist &amp;lt;- read_csv(&amp;quot;https://projects.fivethirtyeight.com/trump-approval-data/approval_polllist.csv&amp;quot;)glimpse(approval_polllist)## Rows: 15,538## Columns: 22## $ president &amp;lt;chr&amp;gt; &amp;quot;Donald Trump&amp;quot;, &amp;quot;Donald Trump&amp;quot;, &amp;quot;Donald Trump&amp;quot;,...## $ subgroup &amp;lt;chr&amp;gt; &amp;quot;All polls&amp;quot;, &amp;quot;All polls&amp;quot;, &amp;quot;All polls&amp;quot;, &amp;quot;All pol...## $ modeldate &amp;lt;chr&amp;gt; &amp;quot;9/18/2020&amp;quot;, &amp;quot;9/18/2020&amp;quot;, &amp;quot;9/18/2020&amp;quot;, &amp;quot;9/18/20...## $ startdate &amp;lt;chr&amp;gt; &amp;quot;1/20/2017&amp;quot;, &amp;quot;1/20/2017&amp;quot;, &amp;quot;1/20/2017&amp;quot;, &amp;quot;1/21/20.</description>
+    </item>
+    
+    <item>
+      <title>GDP components over time and among countries</title>
+      <link>/projects/project5/</link>
+      <pubDate>Sun, 20 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/project5/</guid>
+      <description>GDP components over time and among countriesAt the risk of oversimplifying things, the main components of gross domestic product, GDP are personal consumption (C), business investment (I), government spending (G) and net exports (exports - imports).
+The GDP data we will look at is from the United Nations’ National Accounts Main Aggregates Database, which contains estimates of total GDP and its components for all countries from 1970 to today.</description>
     </item>
     
     <item>
@@ -29,16 +39,6 @@
       <guid>/projects/project3/</guid>
       <description>Climate change and temperature anomaliesIn the first section of this report we will be studying climate change by looking at temperature anomalies recorded since 1880, specifically the deviations from the expected temperature. The raw data is the Combined Land-Surface Air and Sea-Surface Water Temperature Anomalies in the Northern Hemisphere at NASA’s Goddard Institute for Space Studies. The tabular data of temperature anomalies can be found here.
 weather &amp;lt;- read_csv(&amp;quot;https://data.</description>
-    </item>
-    
-    <item>
-      <title>GDP components over time and among countries</title>
-      <link>/projects/project5/</link>
-      <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/projects/project5/</guid>
-      <description>GDP components over time and among countriesAt the risk of oversimplifying things, the main components of gross domestic product, GDP are personal consumption (C), business investment (I), government spending (G) and net exports (exports - imports).
-The GDP data we will look at is from the United Nations’ National Accounts Main Aggregates Database, which contains estimates of total GDP and its components for all countries from 1970 to today.</description>
     </item>
     
     <item>

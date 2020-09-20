@@ -147,10 +147,6 @@ GDP_Difference
 The percentage difference between what we calculated as GDP and the GDP figure included in the dataframe varies from country to country and from year to year. However, we observe that the average difference in 2017 was, on average, less than 1%. When looking more closely at a handful of countries it becomes evident that there are exceptions, such as with Afghanistan, which has a % difference of 31%. 
 
 
-```{r gdp2, echo=FALSE, out.width="100%"}
-knitr::include_graphics(here::here("images", "gdp2.png"), error = FALSE)
-```
-
 From the chart above we can see that for all 3 countries Net Exports represents the smallest component of GDP, and vice versa, Household expenditure is the largest but its worthwhile that the latter has evolved differently in time across these countries (rising in the US, decreasing in India and plateauing in Germany). Gross capital formation has been rising sharply in India since 2000, whilst it has remained relatively constant in the US and Germany. Government expenditure instead has been fairly constant across all 3 countries, with a slight decline for the US and it has the same weight on GDP as Gross Capital formation for US and Germany, whilst it is much smaller component for India. 
 
 
@@ -175,3 +171,4 @@ plot
   
 ```
 
+The GDP composition has continued to rise in these countries, with the most notable increase visible in China and Italy. United Arab Emirates on the other hand experienced a slower increase owing to discovery of oil in the late 1950s, subsequently changing the entire socio-economic landscape of the region. 

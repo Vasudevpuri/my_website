@@ -226,7 +226,33 @@ graph_withoutColor  +theme_bw() + theme(legend.position = &quot;none&quot;)     
 <h2>Compare Confidence Intervals</h2>
 <p>From the graph above, it can be inferred that irrespective of the week, Donald’s approval rating remains in the negative territory. A discerning sign, considering that the 2020 elections are right around the corner.</p>
 <p>Analysis on the confidence bands of week 15 &amp; 34 of 2020 lends new insights (please refer to the plot below), suggesting that the confidence interval is expanding as the election date approaches, suggesting greater variability in the voter’s perception of Trump. This can be a function of severe aberrations in voter perception, owing to socio-economic events such as crisis management during the Covid-19 Pandemic, Black Lives Matter movement &amp; President Obama’s speech condoning Republican policies.</p>
+<pre class="r"><code>#plot CI for trump approval ratings in week 15 and 34
+modified_approval_polllist %&gt;%
+  filter((week_no == 15 | week_no == 34) &amp; year_no == 2020 ) %&gt;%
+  mutate(color  = ifelse(week_no == 15,  &#39;Yes&#39; , &#39;no&#39;))%&gt;%
+  ggplot() + 
+  #plottting error bars 
+  geom_errorbar(aes(x = week_no , 
+                    y = average_nrc ,
+                   ymax  = upper_ribbondata,
+                   ymin  = lower_ribbondata_1,
+                   width = 0.4,
+                   color = color,
+                   ),size = 2) +
+  geom_point(aes(x = week_no , 
+                    y = average_nrc ,
+                 color = color,
+                 fill = color), shape = 21 , size = 4) +
+ labs(y= &quot;Average Net Approval (%)&quot;, x = &quot;Week of the year&quot;) +
+ggtitle(label = &quot;Opinions about Trump vary as election approaches&quot;, subtitle = &quot;Average of net approval (approve - disapprove) for Trump on selected weeks&quot;) +
+  scale_colour_manual(aesthetics = &quot;custom_color_palette&quot;) +
+  theme_bw() +
+  theme(legend.position = &#39;none&#39;)</code></pre>
 <p><img src="/projects/project2/index_files/figure-html/unnamed-chunk-3-1.png" width="648" style="display: block; margin: auto;" /></p>
+</div>
+<div id="conclusions" class="section level2">
+<h2>Conclusions</h2>
+<p>It remains to be seen, how the 2020 elections will unfold. At this point, spurious voter patterns and negative approval margins suggest a rather gloomy outlook. With dwindling voter ratings, uptick in Covid-19 cases and robust candidacy of Democratic president nominee Joe Biden, it remains to be seen what prizes or perils the winter will bring for Donald.</p>
 </div>
 </div>
 
