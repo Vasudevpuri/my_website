@@ -147,7 +147,11 @@ graph_withoutColor  +theme_bw() + theme(legend.position = "none")
 
 From the graph above, it can be inferred that irrespective of the week, Donald's approval rating remains in the negative territory. A discerning sign, considering that the 2020 elections are right around the corner.
 
-Analysis on the confidence bands of week 15 & 34 of 2020 lends new insights (please refer to the plot below), suggesting that the confidence interval is expanding as the election date approaches, suggesting greater variability in the voter's perception of Trump. This can be a function of severe aberrations in voter perception, owing to socio-economic events such as crisis management during the Covid-19 Pandemic, Black Lives Matter movement & President Obama's speech condoning Republican policies.   
+Analysis on the confidence bands of week 15 & 34 of 2020 lends new insights (please refer to the plot below), suggesting that the confidence interval is expanding as the election date approaches, suggesting greater variability in the voter's perception of Trump. This can be a function of severe aberrations in voter perception, owing to socio-economic events such as crisis management during the Covid-19 Pandemic, Black Lives Matter movement & President Obama's speech condoning Republican policies.
+
+## Conclusions
+
+It remains to be seen, how the 2020 elections will unfold. At this point, spurious voter patterns and negative approval margins suggest a rather gloomy outlook. With dwindling voter ratings, uptick in Covid-19  cases and robust candidacy of Democratic president nominee Joe Biden, it remains to be seen what prizes or perils the winter will bring for Donald.    
 
 ```{r, echo = FALSE}
 
